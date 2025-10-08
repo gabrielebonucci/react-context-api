@@ -12,12 +12,4 @@ export function BudgetProvider({ children }) {
   );
 }
 
-export function useBudget() {
-  const context = useContext(BudgetContext);
-  if (!context) {
-    throw new Error(
-      "useBudget deve essere usato all'interno di un BudgetProvider"
-    );
-  }
-  return context;
-}
+export const useBudget = () => useContext(BudgetContext);

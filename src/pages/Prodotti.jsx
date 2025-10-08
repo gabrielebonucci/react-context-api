@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useBudget } from "../contexts/BudgetContext";
+
 const Prodotti = () => {
+  const { budgetMode } = useBudget();
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -12,13 +15,18 @@ const Prodotti = () => {
       .catch((error) => {
         console.error("Errore nel caricamento dei prodotti", error);
       });
-  }, []); // [] assicura che l'effetto venga eseguito solo una volta
+  }, []);
+
+  const filteredProducts = budgetMode
+    ? products.filter((product) => product.price <= 30)
+    : products;
+  console.log("Prodotti dopo filtro:", filteredProducts);
 
   return (
     <div>
       <h1>I Nostri Prodotti</h1>
       <div className="products-list">
-        {products.map((product) => (
+        {filteredProducts.map((product) => (
           <Link
             to={`/prodotti/${product.id}`}
             key={product.id}
