@@ -1,8 +1,13 @@
-import React from "react";
-//import della parte di componenti di navigazione per routing
 import { Link, NavLink } from "react-router-dom";
+import { useBudget } from "../contexts/BudgetContext";
 
 const Navbar = () => {
+  const { budgetMode, setBudgetMode } = useBudget();
+
+  const toggleBudgetMode = () => {
+    setBudgetMode(!budgetMode);
+  };
+
   return (
     <nav>
       <ul>
@@ -16,6 +21,9 @@ const Navbar = () => {
           <NavLink to="/Prodotti">Prodotti</NavLink>
         </li>
       </ul>
+      <button onClick={toggleBudgetMode} className="budget-button">
+        {budgetMode ? "Disattiva Modalità Budget" : "Attiva Modalità Budget"}
+      </button>
     </nav>
   );
 };
